@@ -1,8 +1,3 @@
-
-
-
-
-
 *====================================================================
 * FindZero of user function F(x) in interval [a,b] with accuracy eps;
 * set eps=0 to calculate with maximum accuracy ("machine epsilon").
