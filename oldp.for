@@ -41,6 +41,16 @@
 *
       XM=1.d0+CIN*(E-BGX(JRIS(IT),IT))
       RKOE=(-RPP-RQQ*CIN)/(RP1+RQ1*CIN)
+
+	IF (K.EQ.1) THEN
+	  DO I = 1, JRIS(IT)
+		WRITE(121, *) P1(I) / (RNORM)
+	    WRITE(122, *) (P2(I)+P1(I)*RKOE)/(RNORM)
+		WRITE(123, *) XM*Q1(I)/(RNORM)
+   	    WRITE(124, *) (XM*(Q1(I)*RKOE+Q2(I))+Q1(I)*CIN)/(RNORM)
+	  END DO
+	END IF
+ 
 *
       PE(K,IT)=(P2(JRIS(IT))+P1(JRIS(IT))*RKOE)/(RNORM*RMTS(IT))
 *

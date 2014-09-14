@@ -25,12 +25,16 @@ c	-- Skipping this part - not need more. --
 
 * Calculate effective charges for atom types:
 	if (logf.ne.0) write(logf,*) 'Effective charges:'
+	open(121, file='JRIS_RAD.txt')
 	do it=1,nt
 	rmts(it)=rad(jris(it),it)	!*0.9d0
+	write(121, *) jris(it), rmts(it)
+	write(121, *) rad(:, it)
 	qeff(it)=dble(zmain(it))
      +	-ATINT_(amtc,rad,jris(it),it,step(it),NGRID,NCUT,1,1.d0)
 	if (logf.ne.0) write(logf,*) it,zmain(it),qeff(it)
 	enddo
+	close(121)
 
 	if (logf.ne.0) then	! verify total charges
 	rho=0.0d0

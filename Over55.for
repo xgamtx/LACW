@@ -65,7 +65,7 @@ c	FSI2(1,2) - I2(P',N',M').Re, FSI2(2,2) - I2(P',N',M').Img,
      +		BDCALC(LCUT*2),BECALC(LCUT*2),BFCALC(LCUT*2),
      +		BJCALC(2,LCUT*2),BYCALC(2,LCUT*2),
      +		V_out,VAtShft,VL,VU,VK,TIME_of_all,
-     +		BSmCALC(3+NCUT*LCUT,NQG)
+     +		BSmCALC(3+NCUT*LCUT,NQG), k_start
 
 
 	double precision, allocatable:: EBND(:,:),D(:),Diag(:),RWORK(:)
@@ -186,6 +186,17 @@ d	write(16,*)'**** OVER55 **** LACW Service Pack 6.0 (based on 5.07)'
 	B=CellStruct.B
 	V=CellStruct.V
 	CZ=CellStruct.C
+	open(121, file='countx.txt')
+	write(121, *) COUNTX
+	write(121, *) A, B, CZ, Eps, NTPNTS, NLMAX
+	do I = 1, COUNTX
+	  write(121, *) Basis.INDXX(1, I), 
+	+    Basis.INDXX(2, I), 
+	+	Basis.INDXX(3, I)
+
+	end do
+	close(121)
+
 	ChiralityAngle=CellStruct.ChiralityAngle
 	iUseCoredTube=Project.iUseCoredTube
 
@@ -421,7 +432,12 @@ c	ENDIF
 c
 c --- If NLmax > NL, EE(i,IT)=EE(NL,IT), NL < i <= NLmax ---
 c
-	DO IT=1, NT
+	OPEN(121, FILE='PSIALL.txt')
+	  OPEN(122, FILE='PSIEALL.txt')
+	  OPEN(123, FILE='PSIRALL.txt')
+	  OPEN(124, FILE='PSIERALL.txt')
+ 
+      DO IT=1, NT
 	  DO i=1, JRIS(IT)
 	    RA(i)=RAD(i,IT)
 	    IF(bUseVpot(it)) THEN
@@ -436,6 +452,10 @@ c
 	  END DO
 	END DO
 
+	CLOSE(121)
+      CLOSE(122)
+     	CLOSE(123)
+     	CLOSE(124)
 *	  open (235,file='pout.txt',form='formatted')
 *	    write(235,*) 'P,PE,PR,PER'
 *	    do i=1,8
@@ -890,6 +910,42 @@ d	stop '*TEST* On the main cycle entry'
 	WRITE(*,18) ITRX
 	WRITE(16,18) ITRX
 	WRITE(*,*)
+
+	IF(TBZERO) THEN
+	  k_start = 0.0d0
+	ELSE
+	  k_start = -PI/CZ
+	END IF
+	open(121, file='kstart_kstop.txt')
+	write(121, *) k_start, PI/CZ
+	close(121)
+	OPEN(121, FILE='NATOMS.txt')
+	DO IT = 1, NT
+		WRITE(121, *) NTS(IT)
+	END DO 
+	CLOSE(121)
+	OPEN(121, FILE='COORD.txt')
+	DO IT = 1, NT
+	  DO IQ = 1, NTS(IT)
+	    RO=DSQRT(RSX(IQ,IT)*RSX(IQ,IT)+RSY(IQ,IT)*RSY(IQ,IT))
+
+           PHI=0.D0
+           IF(RO.GT.Eps) PHI=DASIN(DABS(RSY(IQ,IT))/RO)
+           IF(RSY(IQ,IT).LT.0.D0) THEN
+             IF(RSX(IQ,IT).LT.0.D0) THEN
+               PHI=PI+PHI
+             ELSE
+               PHI=-PHI
+             ENDIF
+           ELSE
+             IF(RSX(IQ,IT).LT.0.D0) PHI=PI-PHI
+           ENDIF
+		 WRITE(121, *) Ro, Phi, RSZ(IQ, IT)
+ 
+	  END DO
+	END DO
+	close(121)
+
 * ----- Main calc. begins here -----
 	DO 77 NPNT=NCPNT, NCPNT+NPNTS-1
 	NL=NLsav
@@ -1603,6 +1659,7 @@ c    -- H - corresponding eigenvectors in orthogonal basis set --
       print 37, NEigv, 'eigenvalues has been found,'
 c   -- reducing of eigenvectors (stored in H) to source basis set --
       CALL REIGNR_c(COUNTX,COUNTX,NEigv,H,S,Diag)
+! 12222
 *   -- Test output. H contain eigenvectors in source basis set. --
 d      if(npnt.eq.0) then
 d        write(12) ((H(i,j),j=1,countx),i=1,countx)
@@ -1611,6 +1668,25 @@ d        close(12)
 d      endif
 *   -- end of debug part --
 *
+	IF(NPNT.EQ.0) THEN 
+		OPEN(121, FILE='LENH_LEND.txt')
+		INQUIRE(IOLENGTH = LENH) H
+		INQUIRE(IOLENGTH = LEND) D
+		WRITE(121, *) LENH, LEND
+		CLOSE(121)
+	END IF
+
+	OPEN(121, FILE = 'H_AMNP.TXT', ACCESS = 'DIRECT',
+	+ RECL = LENH+1000)
+C	ÇÀÏÈÑÛÂÀÅÌ ÇÍÀ×ÅÍÈß H Ñ ÏÎÐßÄÊÎÂÛÌ ÍÎÌÅÐÎÌ NPNT Â ÔÀÉËÅ, ÃÄÅ NPNT - ÝÒÎ ÍÎÌÅÐ ÒÎ×ÊÈ K(ÂÎËÍÎÂÎÃÎ ÂÅÊÒÎÐÀ)
+	WRITE(121, REC = NPNT+1) ((H(I,J),J=1,COUNTX),I=1,COUNTX)
+	CLOSE(121)
+
+	OPEN(121, FILE = 'D_ENERGIES.TXT', 
+	+ACCESS = 'DIRECT', RECL = LEND+1000)
+	WRITE(121, REC = NPNT+1) D
+	CLOSE(121)
+
 	IF(NPNT+1.GT.MAXPNT) THEN
 	  WRITE(*,'(/1X,A37,I3)') '*ERR* Too many points. Max. value is ',
      .		MAXPNT

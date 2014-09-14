@@ -181,6 +181,9 @@ d     +	'***** METHOD CLONE: ',TCalcVar(Project.iUseCoredTube+1)
 
 	if (logf.ne.0) then
 	write(logf,*) nt,' atom types:'
+	open(121, file='nt.txt')
+	write(121, *) nt
+	close(121)
 	do it=1,nt
 	  write(logf,'(3a,i4,a,i3,a,i3)') '@=',tAName(it),
      +		': ',nts(it),' atoms; NuclearCharge = ',zmain(it),

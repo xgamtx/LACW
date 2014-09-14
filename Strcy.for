@@ -307,10 +307,12 @@ c	-- Coulomb part + Exchange-correlation part of potential: --
      .			WPOT1(I)/DSQRT(RAD(I,IT)) + CORX
 	  END DO
 	END DO
-
+	open(121, file='WPOT.txt')
 	open (432,file='buff.dat',form='unformatted')
 	write(432) WPOT
+	write(121,*) WPOT
 	close(432)
+	close(121)
 
 d	do it=1,nt
 d	open(26,file='wpot'//char(48+it)//'.lst',form='formatted')
