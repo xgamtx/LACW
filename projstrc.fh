@@ -1,0 +1,77 @@
+c$IF DEFINED (PROJSTRC_H)
+c$ELSE
+c$DEFINE PROJSTRC_H
+*-------------------------------------------------------------------------
+c	include 'coordsys.fh'
+*-------------------------------------------------------------------------
+	double precision PI,EVS
+	parameter (PI=3.14159265358979323846264338328D0,EVS=13.6058D0)
+*-------------------------------------------------------------------------
+	character*80 TCalcVar(5)
+	data TCalcVar/
+     .	'Original LACW: Cylinder without internal hole',
+     .	'Tubular LACW: Cylinder with internal hole',
+     .	'Inverted LACW: 3D medium with empty cylindrical channel',
+     .	'Tubular LACW: Cylinder with internal hole in crystal',
+     .	'Tubular LACW: Cylinder with internal crystal'
+     .	/
+*-------------------------------------------------------------------------
+	character TMTHDS*3(4)
+        data TMTHDS/'BH','SL','BHJ','VWN'/
+*-------------------------------------------------------------------------
+c	character OnOff_Str(2)*4
+c	data OnOff_Str/'OFF','ON'/
+*-------------------------------------------------------------------------
+	structure /CellStructure/
+	  double precision A,B,C,V,ChiralityAngle
+	end structure
+	record /CellStructure/ CellStruct
+	common /CellStructure/ CellStruct
+*-------------------------------------------------------------------------
+c	include 'atomdata.fh'
+*-------------------------------------------------------------------------
+	structure /TProject/
+	  integer iUseCoredTube
+	  logical bAddPCompanion
+	  double precision EnergyCutOff
+	  character*256 sJobTitle
+	  integer iBands,iPointsTotal,iPointsNow
+	  double precision WvStart
+	  double precision EpsInt,EpsCoords,EpsBess
+	  integer NL,NLmax,NLsav
+	  integer NelCell
+	  logical SaveI3M
+	  logical bIntersphericalDos
+	end structure
+	record /TProject/ Project
+	common /TProject/ Project
+*-------------------------------------------------------------------------
+	structure /TProjectPlots/
+	  double precision EnergyBottom,EnergyTop
+	  double precision Halfwidth,HalfwidthFermi,iRenderPitch
+	  logical SeparateBandPlotFiles
+	end structure
+	record /TProjectPlots/ Plots
+	common /TProjectPlots/ Plots
+*-------------------------------------------------------------------------
+! info class of records stored in the fpmaps.dat file:
+	parameter ( icNone=0,
+     +	icDensity=1, icVspcharg=2, icVnuclei=3, icVxc=4,
+     +	icVfp=5, icVmnp=6, icVmnpIS=7,
+     +	icIntMap=8, icSpatialGrid=256 )
+*-------------------------------------------------------------------------
+	structure /TProjectFP/
+	  integer iUseFP
+	  integer iCoordSystem,iNcell,iVShiftTo,
+     +		iNumPointsRho,iNumPointsPhi,iNumPointsTheta,
+     +		iNumPointsX,iNumPointsY,iNumPointsZ
+	  double precision dRho,dPhi,dTheta,dX,dY,dZ
+	end structure
+	record /TProjectFP/ FP
+	common /TProjectFP/ FP
+*-------------------------------------------------------------------------
+	include 'xcpot.fh'
+	record /cxcpot/ Co
+	common /cxcpot/ Co
+*-------------------------------------------------------------------------
+c$ENDIF

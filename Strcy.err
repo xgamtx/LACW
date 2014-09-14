@@ -1,0 +1,9 @@
+../lib/Strcy.for
+../lib/Strcy.for(751): warning FOR4265: symbol RESCCR referenced but not set
+../lib/Strcy.for(751): warning FOR4265: symbol RESCY referenced but not set
+../lib/Strcy.for(751): warning FOR4265: symbol RESCJ referenced but not set
+../lib/Strcy.for(751): warning FOR4270: unused symbol CALCCCR
+../lib/Strcy.for(751): warning FOR4270: unused symbol CALCCY
+../lib/Strcy.for(751): warning FOR4270: unused symbol CALCCJ
+../lib/Strcy.for(751): warning FOR4280: unused local variable TMTHDS
+../lib/Strcy.for(751): warning FOR4280: unused local variable QCHTEXT

@@ -1,0 +1,24 @@
+c$IF DEFINED (STRRESULT_H)
+c$ELSE
+c$DEFINE STRRESULT_H
+*-------------------------------------------------------------------------
+	integer MAXMNP,MUL
+	parameter (MAXMNP=40,MUL=20)
+
+	integer MMAX,NMAX
+	parameter (MMAX=MAXMNP+1, NMAX=MAXMNP)
+
+	integer NAct
+	double precision AllKappas,abJ,abJD,abY,abYD
+	common /TKappas/ NAct(MMAX),	! Actual numbers of kappas found for different m's
+     +		AllKappas(MMAX,NMAX),
+     +		abJ(MMAX,NMAX,2),abJD(MMAX,NMAX,2),
+     +		abY(MMAX,NMAX,2),abYD(MMAX,NMAX,2)
+
+	structure /TBasis/
+	  integer, pointer:: INDXX(:,:)
+	  integer COUNTX
+	end structure
+c	record /TBasis/ Basis
+*-------------------------------------------------------------------------
+c$ENDIF

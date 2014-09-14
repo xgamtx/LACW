@@ -1,0 +1,35 @@
+c$IF DEFINED (ATOMDATA_H)
+c$ELSE
+c$DEFINE ATOMDATA_H
+*-------------------------------------------------------------------------
+* --- Do not change LCUT, if possible: when you change LCUT here,       ----
+* --- set it also in OLDP.FOR, routine BASIS1.                          ----
+* --- W A R N I N G ! In this case, LCUT must be =10 also in OLDP.FOR ! ----
+	integer NQG,LCUT,NCUT,NGRID
+	parameter (NQG=100,LCUT=10,NCUT=5,NGRID=300)
+	double precision RSX,RSY,RSZ,RSTART,STEP,RAD,WPOT,AMTC,RMTS,QEFF
+	integer nt,NTS,ZMAIN,JRIS,NEL
+	character TANAME*12
+	common /AtomData/ nt,
+     +	RSX(NQG,NCUT),RSY(NQG,NCUT),RSZ(NQG,NCUT),	! atom locations
+     +	RSTART(NCUT),STEP(NCUT),RAD(NGRID,NCUT),
+     +	AMTC(NGRID,NCUT),CORE(NGRID,NCUT),WPOT(NGRID,NCUT),
+     +	NTS(NQG),ZMAIN(NCUT),JRIS(NCUT),NEL(NCUT),
+     +	EE(LCUT,NCUT),
+     +	RMTS(NCUT),NATOM(NCUT),STRJ(NCUT),QEFF(NCUT),
+     +	TANAME(NCUT)	! atom type names ('Carbon',...)
+
+	double precision bgx(NGRID,NCUT)
+	equivalence (wpot,bgx)
+
+	integer IQChrg,IQChrgFlg
+	double precision Vpot
+	logical bUseVpot
+	logical bQCF
+	common /TShellCalc/ Vpot(NCUT),bUseVpot(NCUT),
+     +		IQChrg,IQChrgFlg(2,LCUT*NCUT+1),bQCF(NCUT,LCUT)
+
+	character*1 QchText(5)
+	data QchText/'s','p','d','f','g'/
+*-------------------------------------------------------------------------
+c$ENDIF

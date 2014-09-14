@@ -1,0 +1,19 @@
+../lib/../lib/atom1.for
+../lib/../lib/atom1.for(88): warning FOR4269: unused dummy argument NCY
+../lib/../lib/atom1.for(352): warning FOR4280: unused local variable ETOP
+../lib/../lib/atom1.for(352): warning FOR4265: symbol DELU referenced but not set
+../lib/../lib/atom1.for(612): warning FOR4280: unused local variable SMALL
+../lib/../lib/atom1.for(612): warning FOR4280: unused local variable DMUL
+../lib/../lib/atom1.for(612): warning FOR4280: unused local variable EFAC
+../lib/../lib/atom1.for(728): warning FOR4269: unused dummy argument DX
+../lib/../lib/atom1.for(728): warning FOR4269: unused dummy argument NMX
+../lib/../lib/atom1.for(830): warning FOR4280: unused local variable SMALL1
+../lib/../lib/atom1.for(966): warning FOR4280: unused local variable D2
+../lib/../lib/atom1.for(966): warning FOR4280: unused local variable D1
+../lib/../lib/atom1.for(966): warning FOR4280: unused local variable NS
+../lib/../lib/atom1.for(1356): warning FOR4280: unused local variable SMALL2
+../lib/../lib/atom1.for(1356): warning FOR4280: unused local variable TEND
+../lib/../lib/atom1.for(1627): warning FOR4280: unused local variable P4
+../lib/../lib/atom1.for(1627): warning FOR4280: unused local variable NAME2
+../lib/../lib/atom1.for(1627): warning FOR4280: unused local variable IDENT2
+../lib/../lib/atom1.for(1627): warning FOR4280: unused local variable IDENT1

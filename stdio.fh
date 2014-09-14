@@ -1,0 +1,9 @@
+c$IF DEFINED (STDIO_H)
+c$ELSE
+c$DEFINE STDIO_H
+*-------------------------------------------------------------------------
+	integer iin,iout,ierr
+	common /stdio/ iin,iout,ierr
+	common DEBUG
+*-------------------------------------------------------------------------
+c$ENDIF

@@ -1,0 +1,8 @@
+../lib/calc_c.for
+../lib/calc_c.for(89): warning FOR4270: unused symbol TII
+../lib/calc_c.for(89): warning FOR4270: unused symbol BK
+../lib/calc_c.for(89): warning FOR4270: unused symbol TRAP_INT_INF
+../lib/calc_c.for(89): warning FOR4270: unused symbol DK
+../lib/calc_c.for(89): warning FOR4269: unused dummy argument V
+../lib/calc_c.for(89): warning FOR4270: unused symbol DI
+../lib/calc_c.for(89): warning FOR4270: unused symbol BI

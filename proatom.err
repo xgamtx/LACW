@@ -1,0 +1,5 @@
+../lib/../lib/proatom.for
+../lib/../lib/proatom.for(299): warning FOR4280: unused local variable D4
+../lib/../lib/proatom.for(299): warning FOR4280: unused local variable D3
+../lib/../lib/proatom.for(299): warning FOR4280: unused local variable PI
+../lib/../lib/proatom.for(468): warning FOR4280: unused local variable CF1

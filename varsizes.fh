@@ -1,0 +1,7 @@
+c$IF DEFINED (VARSIZES_H)
+c$ELSE
+c$DEFINE VARSIZES_H
+*-------------------------------------------------------------------------
+	parameter (INTL=4,IDBL=8,ICMPLX=IDBL*2,ICHAR=1,IINT=INTL)
+*-------------------------------------------------------------------------
+c$ENDIF

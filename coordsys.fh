@@ -1,0 +1,11 @@
+c$IF DEFINED (COORDSYS_H)
+c$ELSE
+c$DEFINE COORDSYS_H
+*-------------------------------------------------------------------------
+	parameter (
+     +		iCoords3dCartesian	=0,
+     +		iCoords3dSpherical	=1,
+     +		iCoords3dCylindrical	=2
+     +	)
+*-------------------------------------------------------------------------
+c$ENDIF

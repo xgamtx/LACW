@@ -1,0 +1,11 @@
+c$IF DEFINED (XCPOT_H)
+c$ELSE
+c$DEFINE XCPOT_H
+*-------------------------------------------------------------------------
+	structure /cxcpot/
+	  double precision XCCP,XCCF,XCRP,XCRF,XALPHA,OTH,FTH,AA,BB,ALPHA
+	  integer IXCH
+	end structure
+c	record /cxcpot/ Co
+*-------------------------------------------------------------------------
+c$ENDIF

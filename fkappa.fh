@@ -1,0 +1,7 @@
+	! exchange structure for zerofunc():
+	structure /zerofunc_params_struct/
+	  double precision A,B,V,eps
+	  integer m
+	end structure
+	record /zerofunc_params_struct/ zf_params
+	common /param__zerofunc/ zf_params

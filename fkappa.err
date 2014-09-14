@@ -1,0 +1,3 @@
+../lib/fkappa.for
+../lib/fkappa.for(107): warning FOR4280: unused local variable TCALCVAR
+../lib/fkappa.for(107): warning FOR4280: unused local variable TMTHDS

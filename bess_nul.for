@@ -1,0 +1,83 @@
+      SUBROUTINE BESS_NUL(N,M,SOL,NDIM)
+c       Here N - count of values, M - power of BESSEL J function
+      INTEGER N,M,AM,I,Md,NDIM
+      DOUBLE PRECISION STEP,FIND0,Eps
+      PARAMETER(Eps=1.0D-7)
+      EXTERNAL FIND0
+      DOUBLE PRECISION SOL(NDIM),XA,XB,BJA,BJB,DUMMY
+      double precision FSTSOL(20)
+      DATA FSTSOL/2.4048255577D0,5.5200781103D0,8.6537279129D0,
+     .		 11.7915344391D0,14.9309177086D0,18.0710639679D0,
+     .		 21.2116366299D0, 24.3524715308D0,27.4934791320D0,
+     .		 30.6346064684D0,33.7758202136D0,36.9170983537D0,
+     .		 40.0584257646D0, 43.1997917132D0,46.3411883717D0,
+     .		 49.4826098974D0,52.6240518411D0,55.7655107550D0,
+     .		 58.9069839261D0,62.0484691902D0/
+      DATA STEP/.5D0/
+
+	AM=IABS(M)
+      IF(N+AM.GT.NDIM) THEN
+	 WRITE(*,1) NDIM,N+AM
+ 	 STOP
+      ENDIF
+      DO I=1,20
+        IF(I.GT.AM+N) EXIT
+        SOL(I)=FSTSOL(I)
+      END DO
+      XA=SOL(I-1)+Eps
+      XB=XA+STEP
+      DO WHILE(I.LE.AM+N)
+	  CALL BESS(0,XA,BJA,DUMMY)
+	  CALL BESS(0,XB,BJB,DUMMY)
+	  IF(BJA*BJB.LT.0D0) THEN
+	    SOL(I)=FIND0(XA,XB,0,0)
+	    I=I+1
+	  ENDIF
+	  XA=XB+Eps
+	  XB=XB+STEP-Eps
+      END DO
+      Md=0
+      DO I=1,AM
+	 IF(I.EQ.AM) Md=1
+	  DO J=1,AM+N-I
+	    VAL=FIND0(SOL(J),SOL(J+1),I*ISIGN(1,M),Md)
+	    SOL(J)=VAL
+	  END DO
+      END DO
+      RETURN
+   1  FORMAT(' **BESS_NUL**> max. dimension of array of solutions',I3,
+     .       ', VALUE:',i3)
+      END
+*
+      DOUBLE PRECISION FUNCTION FIND0(A,B,N,Mode)
+      INTEGER N,Mode
+c       Here N - power of BESSEL J function
+      DOUBLE PRECISION A,B,VAL,F,F1,F2,DUMMY,X,XA,XB
+      DOUBLE PRECISION EpsHigh,EpsLow,Eps
+      PARAMETER(EpsLow=1.D-4,EpsHigh=1.D-11)
+      XA=A
+      XB=B
+      IF(Mode.EQ.0) THEN
+	  Eps=EpsLow
+	ELSE
+	  Eps=EpsHigh
+      ENDIF
+      CALL BESS(N,XA,F1,DUMMY)
+      CALL BESS(N,XB,F2,DUMMY)
+      X=XA
+      VAL=XB
+      DO WHILE (DABS(X-VAL).GT.Eps)
+		X=VAL
+		VAL=XA-(XB-XA)/(F2-F1)*F1
+		CALL BESS(N,VAL,F,DUMMY)
+		IF(F*F1.LT.0D0) THEN
+		  XB=VAL
+		  F2=F
+		  ELSE
+		  XA=VAL
+		  F1=F
+		ENDIF
+      END DO
+      FIND0=(VAL+X)/2.D0
+      RETURN
+      END

@@ -1,0 +1,3 @@
+../lib/strresult.for
+../lib/strresult.for(50): warning FOR4280: unused local variable QCHTEXT
+../lib/strresult.for(78): warning FOR4280: unused local variable QCHTEXT

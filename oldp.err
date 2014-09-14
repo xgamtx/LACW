@@ -1,0 +1,5 @@
+../lib/oldp.for
+../lib/oldp.for(57): warning FOR4280: unused local variable QCHTEXT
+../lib/oldp.for(180): warning FOR4280: unused local variable QCHTEXT
+../lib/oldp.for(317): warning FOR4280: unused local variable QCHTEXT
+../lib/oldp.for(336): warning FOR4280: unused local variable QCHTEXT

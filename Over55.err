@@ -1,0 +1,3 @@
+../lib/Over55.for
+../lib/Over55.for(1825): warning FOR4280: unused local variable TMTHDS
+../lib/Over55.for(1825): warning FOR4280: unused local variable TCALCVAR
